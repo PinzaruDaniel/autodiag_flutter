@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/resources/app_colors.dart';
-import 'package:presentation/util/widgets/loading_overlay_widget.dart';
+import 'package:presentation/utils/widgets/loading_overlay_widget.dart';
 
 class BasePage extends StatefulWidget {
   final WidgetBuilder builder;
