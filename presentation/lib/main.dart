@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:presentation/controllers/binding/root_bindings_controllers.dart';
 import 'package:presentation/pages/login/login_page.dart';
 import 'package:presentation/resources/app_colors.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: (_, context) {
-        return MaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             textSelectionTheme: TextSelectionThemeData(

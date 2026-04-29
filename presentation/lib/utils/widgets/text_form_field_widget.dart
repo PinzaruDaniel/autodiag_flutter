@@ -8,6 +8,7 @@ class TextFormFieldWidget extends StatefulWidget {
   final String? labelText;
   final TextInputType? textInputType;
   final TextEditingController textEditingController;
+  final List<String>? autofillHints;
   final Function(String?)? validator;
 
   const TextFormFieldWidget({
@@ -15,6 +16,7 @@ class TextFormFieldWidget extends StatefulWidget {
     this.hintText,
     this.labelText,
     this.textInputType,
+    this.autofillHints,
     this.validator,
     required this.textEditingController,
   });
@@ -31,6 +33,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         FormField(
           builder: (state) {
             return TextFormField(
+              autofillHints: widget.autofillHints,
               controller: widget.textEditingController,
               style: TextStyles.baseTextStyle,
               validator: (value) => widget.validator?.call(value),
@@ -40,15 +43,15 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                 fillColor: AppColors.onBackground,
                 hintStyle: TextStyle(color: AppColors.hintColor),
                 border: OutlineInputBorder(
-                  borderRadius: .circular(10.r),
+                  borderRadius: .circular(25.r),
                   borderSide: BorderSide(color: AppColors.borderColor),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: .circular(10.r),
+                  borderRadius: .circular(25.r),
                   borderSide: BorderSide(color: AppColors.borderColor),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: .circular(10.r),
+                  borderRadius: .circular(25.r),
                   borderSide: BorderSide(color: AppColors.primary, width: 2.w),
                 ),
               ),
