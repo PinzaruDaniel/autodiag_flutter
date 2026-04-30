@@ -9,7 +9,9 @@ class TextFormFieldWidget extends StatefulWidget {
   final TextInputType? textInputType;
   final TextEditingController textEditingController;
   final List<String>? autofillHints;
+  final Widget? prefixIcon;
   final Function(String?)? validator;
+  final bool isPassword;
 
   const TextFormFieldWidget({
     super.key,
@@ -18,7 +20,9 @@ class TextFormFieldWidget extends StatefulWidget {
     this.textInputType,
     this.autofillHints,
     this.validator,
+    this.isPassword = false,
     required this.textEditingController,
+    this.prefixIcon,
   });
 
   @override
@@ -26,6 +30,8 @@ class TextFormFieldWidget extends StatefulWidget {
 }
 
 class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
+  bool isObscure = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,8 +43,21 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               controller: widget.textEditingController,
               style: TextStyles.baseTextStyle,
               validator: (value) => widget.validator?.call(value),
+              obscureText: widget.isPassword ? isObscure : false,
               decoration: InputDecoration(
+                prefixIcon: widget.prefixIcon,
+                suffixIcon: widget.isPassword
+                    ? IconButton(
+                        color: AppColors.hintColor,
+                        onPressed: () {
+                          isObscure = !isObscure;
+                          setState(() {});
+                        },
+                        icon: Icon( isObscure ? Icons.visibility_off_outlined : Icons.visibility_outlined, color: AppColors.hintColor, size: 20.w),
+                      )
+                    : null,
                 hintText: widget.hintText,
+
                 filled: true,
                 fillColor: AppColors.onBackground,
                 hintStyle: TextStyle(color: AppColors.hintColor),

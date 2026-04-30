@@ -9,7 +9,7 @@ class AppColors {
   static const surface = Color(0xFFFFFFFF);
   static const hintColor = Color(0xffa5a8ad);
   static const error = Color(0xFFB00020);
-  static const onPrimary = Color(0xFFFFFFFF);
+  static const white = Color(0xFFFFFFFF);
   static const onSecondary = Color(0xFF000000);
   static const onBackground = Color(0xFF1d293b);
   static const onSurface = Color(0xFF000000);

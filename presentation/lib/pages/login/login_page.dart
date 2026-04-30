@@ -5,6 +5,7 @@ import 'package:presentation/resources/app_colors.dart';
 import 'package:presentation/resources/text_styles.dart';
 import 'package:presentation/utils/routing/app_router.dart';
 import 'package:presentation/utils/widgets/base/base_page.dart';
+import 'package:presentation/utils/widgets/button_widget.dart';
 import 'package:presentation/utils/widgets/text_form_field_widget.dart';
 
 class LoginPage extends StatelessWidget {
@@ -34,12 +35,15 @@ class LoginPage extends StatelessWidget {
                       children: [
                         TextFormFieldWidget(
                           hintText: 'Email',
+                          prefixIcon: Icon(Icons.email_outlined, color: AppColors.hintColor, size: 20.w),
                           autofillHints: [AutofillHints.newUsername, AutofillHints.username],
                           textEditingController: authController.loginEmailController,
                         ),
                         16.verticalSpace,
                         TextFormFieldWidget(
                           hintText: 'Password',
+                          isPassword: true,
+                          prefixIcon: Icon(Icons.lock_outline_rounded, color: AppColors.hintColor, size: 20.w),
                           autofillHints: [AutofillHints.password],
                           textEditingController: authController.loginPasswordController,
                         ),
@@ -61,36 +65,18 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
                 36.verticalSpace,
-                InkWell(
+                ButtonWidget(
                   onTap: () => AppRouter.goToHomePage(clearStack: false),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      boxShadow: [BoxShadow(color: AppColors.primary.withAlpha(100), blurRadius: 6, spreadRadius: 2)],
-                      borderRadius: .circular(25.r),
-                      gradient: LinearGradient(colors: [AppColors.primary, AppColors.secondary]),
-                    ),
-                    child: Padding(
-                      padding: .all(16.w),
-                      child: Text('Login', textAlign: TextAlign.center, style: TextStyles.whiteBold),
-                    ),
-                  ),
+                  title: 'Login',
+                  linearGradient: LinearGradient(colors: [AppColors.primary, AppColors.secondary]),
+                  boxShadow: BoxShadow(color: AppColors.primary.withAlpha(100), blurRadius: 6, spreadRadius: 2),
                 ),
                 16.verticalSpace,
-                InkWell(
+                ButtonWidget(
                   onTap: () => AppRouter.goToSignInPage(),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: .circular(25.r),
-                      border: .all(color: AppColors.borderColor),
-                      color: AppColors.onBackground,
-                    ),
-                    child: Padding(
-                      padding: .all(16.w),
-                      child: Text('Create account', textAlign: TextAlign.center, style: TextStyles.whiteBold),
-                    ),
-                  ),
+                  title: 'Create account',
+                  borderColor: AppColors.borderColor,
+                  background: AppColors.onBackground,
                 ),
               ],
             ),
