@@ -25,8 +25,10 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: .center,
               children: [
                 20.verticalSpace,
-                Image.asset('assets/icons/car_icon_only.png', width: 250.w),
-                50.verticalSpace,
+                Image.asset('assets/icons/car_icon_only.png', width: 225.w),
+                8.verticalSpace,
+                Text('AutoDiag AI', style: TextStyles.whiteBold(fontSize: 26.sp),),
+                36.verticalSpace,
                 Form(
                   child: AutofillGroup(
                     child: Column(
@@ -66,7 +68,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 36.verticalSpace,
                 ButtonWidget(
-                  onTap: () => AppRouter.goToHomePage(clearStack: false),
+                  onTap: () => AppRouter.goToHomePage(clearStack: true),
                   title: 'Login',
                   linearGradient: LinearGradient(colors: [AppColors.primary, AppColors.secondary]),
                   boxShadow: BoxShadow(color: AppColors.primary.withAlpha(100), blurRadius: 6, spreadRadius: 2),

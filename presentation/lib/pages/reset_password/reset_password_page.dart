@@ -29,35 +29,45 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           child: Padding(
             padding: .symmetric(vertical: 16.h, horizontal: 16.w),
             child: Column(
-              mainAxisAlignment: .start,
               children: [
-                36.verticalSpace,
                 Row(
                   mainAxisAlignment: .center,
-                  children: [
-                    IconContainerWidget(iconData: Icons.email_outlined)
-                  ],
+                  children: [IconContainerWidget(iconData: Icons.email_outlined)],
                 ),
-                40.verticalSpace,
+                36.verticalSpace,
                 Text('Reset your password', style: TextStyles.whiteBold(fontSize: 20.sp)),
                 12.verticalSpace,
-                Text(
-                  'Enter your email and we\'ll send you a link to reset your password',
-                  style: TextStyles.baseTextStyle,
-                  textAlign: .center,
+                Text('Enter your email to reset your password', style: TextStyles.baseTextStyle, textAlign: .center),
+                36.verticalSpace,
+                Form(
+                  child: Column(
+                    children: [
+                      TextFormFieldWidget(
+                        prefixIcon: Icon(Icons.email_outlined, color: AppColors.hintColor),
+                        hintText: 'Email',
+                        textEditingController: .new(),
+                      ),
+                      16.verticalSpace,
+                      TextFormFieldWidget(
+                        prefixIcon: Icon(Icons.lock_outline_rounded, color: AppColors.hintColor),
+                        hintText: 'New password',
+                        textEditingController: .new(),
+                      ),
+                      16.verticalSpace,
+                      TextFormFieldWidget(
+                        prefixIcon: Icon(Icons.lock_reset_outlined, color: AppColors.hintColor),
+                        hintText: 'Confirm new password',
+                        textEditingController: .new(),
+                      ),
+                    ],
+                  ),
                 ),
-                40.verticalSpace,
 
-                TextFormFieldWidget(
-                  prefixIcon: Icon(Icons.email_outlined, color: AppColors.hintColor),
-                  hintText: 'Email',
-                  textEditingController: .new(),
-                ),
                 32.verticalSpace,
 
                 ButtonWidget(
                   onTap: () {},
-                  title: 'Send resetLink',
+                  title: 'Confirm reset password',
                   linearGradient: LinearGradient(colors: [AppColors.primary, AppColors.secondary]),
                   boxShadow: BoxShadow(color: AppColors.primary.withAlpha(100), blurRadius: 6, spreadRadius: 2),
                 ),
