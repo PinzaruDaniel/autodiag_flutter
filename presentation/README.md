@@ -2,6 +2,16 @@
 
 A new Flutter project.
 
+## Audio Recording
+
+The Home screen mic button records a short (7s) audio clip using the `record` plugin.
+
+Permissions:
+- Android: `android.permission.RECORD_AUDIO` in `presentation/android/app/src/main/AndroidManifest.xml`
+- iOS: `NSMicrophoneUsageDescription` in `presentation/ios/Runner/Info.plist`
+
+You can adjust the recording duration in `presentation/lib/controllers/home_controller.dart`.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

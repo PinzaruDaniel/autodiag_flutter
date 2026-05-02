@@ -14,4 +14,6 @@ class AppColors {
   static const onBackground = Color(0xFF1d293b);
   static const onSurface = Color(0xFF000000);
   static const onError = Color(0xFFFFFFFF);
+  static const recordingStart = Color(0xFFFF8A00);
+  static const recordingEnd = Color(0xFFEF4444);
 }
