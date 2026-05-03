@@ -18,6 +18,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, AuthTokensEntity>> login(String email, String password) async {
     try {
       final response = await apiService.login({"email": email, "password": password});
+
+      print(response.toEntity);
       return Right(response.toEntity);
     } catch (e, stackTrace) {
       if (e is DioException) {
@@ -62,5 +64,15 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       return Left(Failure.error(e, stackTrace));
     }
+  }
+
+  @override
+  Future<String?> getAccessToken() async {
+    return localSource.getAccessToken();
+  }
+
+  @override
+  Future<String?> getRefreshToken() async {
+    return localSource.getRefreshToken();
   }
 }

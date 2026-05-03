@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:presentation/controllers/controller_imports.dart';
 import 'package:presentation/resources/app_colors.dart';
@@ -7,6 +8,7 @@ import 'package:presentation/utils/routing/app_router.dart';
 import 'package:presentation/utils/widgets/base/base_page.dart';
 import 'package:presentation/utils/widgets/button_widget.dart';
 import 'package:presentation/utils/widgets/text_form_field_widget.dart';
+import 'package:presentation/utils/constants/pending_ids.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -16,7 +18,7 @@ class LoginPage extends StatelessWidget {
     return BasePage(
       extendBody: true,
       resizeToAvoidBottomInset: true,
-      pendingIds: ['da'],
+      pendingIds: [PendingIds.login],
       builder: (context) {
         return SingleChildScrollView(
           child: Padding(
@@ -30,6 +32,7 @@ class LoginPage extends StatelessWidget {
                 Text('AutoDiag AI', style: TextStyles.whiteBold(fontSize: 26.sp),),
                 36.verticalSpace,
                 Form(
+                  key: authController.loginFormKey,
                   child: AutofillGroup(
                     child: Column(
                       crossAxisAlignment: .center,
@@ -40,6 +43,7 @@ class LoginPage extends StatelessWidget {
                           prefixIcon: Icon(Icons.email_outlined, color: AppColors.hintColor, size: 20.w),
                           autofillHints: [AutofillHints.newUsername, AutofillHints.username],
                           textEditingController: authController.loginEmailController,
+                          validator: authController.validateEmail,
                         ),
                         16.verticalSpace,
                         TextFormFieldWidget(
@@ -48,6 +52,7 @@ class LoginPage extends StatelessWidget {
                           prefixIcon: Icon(Icons.lock_outline_rounded, color: AppColors.hintColor, size: 20.w),
                           autofillHints: [AutofillHints.password],
                           textEditingController: authController.loginPasswordController,
+                          validator: authController.validatePassword,
                         ),
                       ],
                     ),
@@ -68,7 +73,14 @@ class LoginPage extends StatelessWidget {
                 ),
                 36.verticalSpace,
                 ButtonWidget(
-                  onTap: () => AppRouter.goToHomePage(clearStack: true),
+                  onTap:  () {
+                    TextInput.finishAutofillContext();
+                    authController.login(
+                      context: context,
+                      onSuccess: () => AppRouter.goToHomePage(clearStack: true),
+                    );
+
+                  },
                   title: 'Login',
                   linearGradient: LinearGradient(colors: [AppColors.primary, AppColors.secondary]),
                   boxShadow: BoxShadow(color: AppColors.primary.withAlpha(100), blurRadius: 6, spreadRadius: 2),

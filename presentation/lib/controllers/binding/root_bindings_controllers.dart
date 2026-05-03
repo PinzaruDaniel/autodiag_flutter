@@ -5,8 +5,8 @@ import '../main_app_controller.dart';
 
 class RootBindings extends Bindings {
   @override
-  void dependencies() {
-    Get.putAsync<MainAppController>(() async => MainAppController(), permanent: true);
-    Get.putAsync<AuthController>(() async => AuthController(), permanent: true);
+  Future<void> dependencies() async {
+    await Get.putAsync<MainAppController>(() async => MainAppController(), permanent: true);
+    await Get.putAsync<AuthController>(() async => AuthController(), permanent: true);
   }
 }

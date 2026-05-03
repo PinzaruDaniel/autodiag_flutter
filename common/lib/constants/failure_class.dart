@@ -16,27 +16,40 @@ class Failure {
   });
 
   factory Failure.dio(DioException e) {
-    String errorType = e.type
-        .toString()
-        .split('.')
-        .last;
+    final response = e.response;
+    final data = response?.data;
+
+    String? apiMessage;
+    if (data is Map<String, dynamic>) {
+      apiMessage = (data['detail'] ?? data['message'] ?? data['error'])?.toString();
+    } else if (data is String && data.trim().isNotEmpty) {
+      apiMessage = data;
+    }
 
     String message;
-    if (e.response?.statusCode == 404) {
+    if (apiMessage != null && apiMessage.isNotEmpty) {
+      message = apiMessage;
+    } else if (response?.statusCode == 401) {
+      message = 'Unauthorized. Please check your credentials.';
+    } else if (response?.statusCode == 403) {
+      message = 'Forbidden. You do not have access to this resource.';
+    } else if (response?.statusCode == 404) {
       message = 'Error 404. Resource not found or there are no products';
-    } else if (e.response?.statusCode == 503) {
+    } else if (response?.statusCode == 503) {
       message = 'Service unavailable. Error 503';
+    } else if (response?.statusMessage != null && response!.statusMessage!.isNotEmpty) {
+      message = response.statusMessage!;
     } else {
       message = 'Network Error';
     }
 
     return Failure(
       message: message,
-      code: e.response?.statusCode?.toString(),
-      type: 'dio_$errorType',
+      code: response?.statusCode?.toString(),
+      type: 'dio_${e.type.toString().split('.').last}',
       originalError: e,
       details: {
-        'response': e.response?.data,
+        'response': response?.data,
         'stackTrace': e.stackTrace.toString(),
       },
     );

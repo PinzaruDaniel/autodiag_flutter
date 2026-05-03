@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:presentation/controllers/controller_imports.dart';
+import 'package:presentation/resources/app_colors.dart';
+import 'package:presentation/resources/text_styles.dart';
+import 'package:presentation/utils/constants/pending_ids.dart';
+import 'package:presentation/utils/routing/app_router.dart';
+import 'package:presentation/utils/widgets/base/base_app_bar_widget.dart';
 import 'package:presentation/utils/widgets/base/base_page.dart';
 import 'package:presentation/utils/widgets/button_widget.dart';
 import 'package:presentation/utils/widgets/icon_container_widget.dart';
-
-import '../../resources/app_colors.dart';
-import '../../resources/text_styles.dart';
-import '../../utils/widgets/base/base_app_bar_widget.dart';
-import '../../utils/widgets/text_form_field_widget.dart';
+import 'package:presentation/utils/widgets/text_form_field_widget.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -16,7 +18,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePage(
       appBar: BaseAppBarWidget(),
-      pendingIds: ['da'],
+      pendingIds: [PendingIds.register],
       builder: (context) {
         return SingleChildScrollView(
           child: Padding(
@@ -37,28 +39,35 @@ class SignInPage extends StatelessWidget {
                 ),
                 36.verticalSpace,
                 Form(
+                  key: authController.registerFormKey,
                   child: Column(
                     children: [
                       TextFormFieldWidget(
                         prefixIcon: Icon(Icons.email_outlined, color: AppColors.hintColor),
                         hintText: 'Email',
-                        textEditingController: .new(),
+                        textEditingController: authController.registerEmailController,
+                        validator: authController.validateEmail,
                       ),
                       16.verticalSpace,
                       TextFormFieldWidget(
                         prefixIcon: Icon(Icons.lock_outline_rounded, color: AppColors.hintColor),
                         hintText: 'New password',
-                        textEditingController: .new(),
+                        textEditingController: authController.registerPasswordController,
+                        validator: authController.validatePassword,
                       ),
                       16.verticalSpace,
                       TextFormFieldWidget(
                         prefixIcon: Icon(Icons.lock_reset_outlined, color: AppColors.hintColor),
                         hintText: 'Confirm new password',
-                        textEditingController: .new(),
+                        textEditingController: authController.registerConfirmPasswordController,
+                        validator: authController.validateConfirmPassword,
                       ),
                       32.verticalSpace,
                       ButtonWidget(
-                        onTap: () {},
+                        onTap: () => authController.register(
+                          context: context,
+                          onSuccess: () => AppRouter.goToHomePage(clearStack: true),
+                        ),
                         title: 'Create a new account',
                         linearGradient: LinearGradient(colors: [AppColors.primary, AppColors.secondary]),
                         boxShadow: BoxShadow(color: AppColors.primary.withAlpha(100), blurRadius: 6, spreadRadius: 2),

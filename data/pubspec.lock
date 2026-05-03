@@ -208,6 +208,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.1"
+  di:
+    dependency: transitive
+    description:
+      path: "../di"
+      relative: true
+    source: path
+    version: "1.0.0"
   dio:
     dependency: "direct main"
     description:
@@ -314,13 +321,13 @@ packages:
     source: hosted
     version: "4.7.3"
   get_it:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get_it
-      sha256: d85128a5dae4ea777324730dc65edd9c9f43155c109d5cc0a69cab74139fbac1
+      sha256: "568d62f0e68666fb5d95519743b3c24a34c7f19d834b0658c46e26d778461f66"
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.0"
+    version: "9.2.1"
   glob:
     dependency: transitive
     description:
@@ -377,22 +384,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
-  injectable:
-    dependency: "direct main"
-    description:
-      name: injectable
-      sha256: "29559f7e3daebf0084597de86a825ae7f149d9e30264b7fbc71d1069ae82697d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.0"
-  injectable_generator:
-    dependency: "direct dev"
-    description:
-      name: injectable_generator
-      sha256: ba9fa6416392d2266be92c33eefe2d053ea958763a460c3a09e3287f8fbee95f
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.10.0"
   io:
     dependency: transitive
     description:
@@ -664,14 +655,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
-  recase:
-    dependency: transitive
-    description:
-      name: recase
-      sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.0"
   record:
     dependency: transitive
     description:

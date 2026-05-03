@@ -19,6 +19,7 @@ class AuthLoginUseCase extends UseCase<void, AuthLoginParams> {
         return Left(failure);
       },
           (entity) {
+
         return Right(authRepository.insertTokens(entity.accessToken ?? '', entity.refreshToken ?? ''));
       },
     );
