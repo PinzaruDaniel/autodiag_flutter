@@ -6,6 +6,8 @@ abstract class AuthRepository {
   Future<Either<Failure, AuthTokensEntity>> login(String email, String password);
   Future<Either<Failure, AuthTokensEntity>> register(String email, String password);
   Future<Either<Failure, AuthTokensEntity>> resetPassword(String email, String password);
+  Future<Either<Failure, AuthTokensEntity>> validate(String accessToken, String refreshToken);
+  Future<Either<Failure, AuthTokensEntity>> refresh(String refreshToken);
   Future<void> insertTokens(String accessToken, String refreshToken);
   Future<void> deleteTokens();
   Future<String?> getAccessToken();

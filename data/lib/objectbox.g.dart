@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'modules/audio/models/local/audio_result_box.dart';
 import 'modules/auth/models/local/auth_token_box.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -45,6 +46,71 @@ final _entities = <obx_int.ModelEntity>[
       ),
     ],
     relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(2, 4281430618596423778),
+    name: 'AudioPredictionBox',
+    lastPropertyId: const obx_int.IdUid(4, 7637327659519941809),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 6338602127736535075),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 4430025251937721275),
+        name: 'label',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 1091857228427997501),
+        name: 'score',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 7637327659519941809),
+        name: 'audioResultId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(1, 2810210183828136632),
+        relationField: 'audioResult',
+        relationTarget: 'AudioResultBox',
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(3, 8072979797664169932),
+    name: 'AudioResultBox',
+    lastPropertyId: const obx_int.IdUid(2, 3814617985774357858),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 1087720946265210099),
+        name: 'id',
+        type: 6,
+        flags: 129,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 3814617985774357858),
+        name: 'page',
+        type: 6,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(1, 4863253751995935484),
+        name: 'predictions',
+        targetId: const obx_int.IdUid(2, 4281430618596423778),
+      ),
+    ],
     backlinks: <obx_int.ModelBacklink>[],
   ),
 ];
@@ -92,9 +158,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
     // Typically, this is done with `dart run build_runner build`.
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(1, 5060861521753554436),
-    lastIndexId: const obx_int.IdUid(0, 0),
-    lastRelationId: const obx_int.IdUid(0, 0),
+    lastEntityId: const obx_int.IdUid(3, 8072979797664169932),
+    lastIndexId: const obx_int.IdUid(1, 2810210183828136632),
+    lastRelationId: const obx_int.IdUid(1, 4863253751995935484),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
     retiredIndexUids: const [],
@@ -152,6 +218,99 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    AudioPredictionBox: obx_int.EntityDefinition<AudioPredictionBox>(
+      model: _entities[1],
+      toOneRelations: (AudioPredictionBox object) => [object.audioResult],
+      toManyRelations: (AudioPredictionBox object) => {},
+      getId: (AudioPredictionBox object) => object.id,
+      setId: (AudioPredictionBox object, int id) {
+        object.id = id;
+      },
+      objectToFB: (AudioPredictionBox object, fb.Builder fbb) {
+        final labelOffset = fbb.writeString(object.label);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, labelOffset);
+        fbb.addFloat64(2, object.score);
+        fbb.addInt64(3, object.audioResult.targetId);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final labelParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final scoreParam = const fb.Float64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final object = AudioPredictionBox(
+          id: idParam,
+          label: labelParam,
+          score: scoreParam,
+        );
+        object.audioResult.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          0,
+        );
+        object.audioResult.attach(store);
+        return object;
+      },
+    ),
+    AudioResultBox: obx_int.EntityDefinition<AudioResultBox>(
+      model: _entities[2],
+      toOneRelations: (AudioResultBox object) => [],
+      toManyRelations: (AudioResultBox object) => {
+        obx_int.RelInfo<AudioResultBox>.toMany(1, object.id):
+            object.predictions,
+      },
+      getId: (AudioResultBox object) => object.id,
+      setId: (AudioResultBox object, int id) {
+        object.id = id;
+      },
+      objectToFB: (AudioResultBox object, fb.Builder fbb) {
+        fbb.startTable(3);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.page);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final pageParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        final object = AudioResultBox(id: idParam, page: pageParam);
+        obx_int.InternalToManyAccess.setRelInfo<AudioResultBox>(
+          object.predictions,
+          store,
+          obx_int.RelInfo<AudioResultBox>.toMany(1, object.id),
+        );
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -173,4 +332,47 @@ class AuthTokenBox_ {
   static final refreshToken = obx.QueryStringProperty<AuthTokenBox>(
     _entities[0].properties[2],
   );
+}
+
+/// [AudioPredictionBox] entity fields to define ObjectBox queries.
+class AudioPredictionBox_ {
+  /// See [AudioPredictionBox.id].
+  static final id = obx.QueryIntegerProperty<AudioPredictionBox>(
+    _entities[1].properties[0],
+  );
+
+  /// See [AudioPredictionBox.label].
+  static final label = obx.QueryStringProperty<AudioPredictionBox>(
+    _entities[1].properties[1],
+  );
+
+  /// See [AudioPredictionBox.score].
+  static final score = obx.QueryDoubleProperty<AudioPredictionBox>(
+    _entities[1].properties[2],
+  );
+
+  /// See [AudioPredictionBox.audioResult].
+  static final audioResult =
+      obx.QueryRelationToOne<AudioPredictionBox, AudioResultBox>(
+        _entities[1].properties[3],
+      );
+}
+
+/// [AudioResultBox] entity fields to define ObjectBox queries.
+class AudioResultBox_ {
+  /// See [AudioResultBox.id].
+  static final id = obx.QueryIntegerProperty<AudioResultBox>(
+    _entities[2].properties[0],
+  );
+
+  /// See [AudioResultBox.page].
+  static final page = obx.QueryIntegerProperty<AudioResultBox>(
+    _entities[2].properties[1],
+  );
+
+  /// see [AudioResultBox.predictions]
+  static final predictions =
+      obx.QueryRelationToMany<AudioResultBox, AudioPredictionBox>(
+        _entities[2].relations[0],
+      );
 }

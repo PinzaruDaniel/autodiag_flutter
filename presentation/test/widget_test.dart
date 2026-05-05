@@ -19,6 +19,7 @@ import 'package:domain/modules/auth/auth_repository.dart';
 import 'package:domain/modules/auth/use_cases/auth_login_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_register_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_session_use_case.dart';
+import 'package:domain/modules/auth/use_cases/auth_validate_use_case.dart';
 import 'package:domain/modules/auth/models/index.dart';
 
 class FakeAuthRepository implements AuthRepository {
@@ -34,6 +35,16 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future<Either<Failure, AuthTokensEntity>> resetPassword(String email, String password) async {
+    return Right(AuthTokensEntity(accessToken: 'token', refreshToken: 'refresh'));
+  }
+
+  @override
+  Future<Either<Failure, AuthTokensEntity>> validate(String accessToken, String refreshToken) async {
+    return Right(AuthTokensEntity(accessToken: 'token', refreshToken: 'refresh'));
+  }
+
+  @override
+  Future<Either<Failure, AuthTokensEntity>> refresh(String refreshToken) async {
     return Right(AuthTokensEntity(accessToken: 'token', refreshToken: 'refresh'));
   }
 
@@ -64,6 +75,9 @@ void main() {
     );
     getIt.registerLazySingleton<AuthSessionUseCase>(
       () => AuthSessionUseCase(authRepository: getIt<AuthRepository>()),
+    );
+    getIt.registerLazySingleton<AuthValidateUseCase>(
+      () => AuthValidateUseCase(authRepository: getIt<AuthRepository>()),
     );
 
     Get.deleteAll(force: true);

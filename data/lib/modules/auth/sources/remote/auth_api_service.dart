@@ -20,5 +20,6 @@ abstract class AuthApiService {
   @POST('/auth/reset-password')
   Future<AuthTokensApiDto> resetPassword(@Body() Map<String, dynamic> body);
 
-
+  @POST('/auth/validate')
+  Future<AuthTokensApiDto> validate(@Body() Map<String, dynamic> body);
 }

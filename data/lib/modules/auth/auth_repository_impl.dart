@@ -67,6 +67,35 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, AuthTokensEntity>> validate(String accessToken, String refreshToken) async {
+    try {
+      final response = await apiService.validate({
+        "access_token": accessToken,
+        "refresh_token": refreshToken,
+      });
+      return Right(response.toEntity);
+    } catch (e, stackTrace) {
+      if (e is DioException) {
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AuthTokensEntity>> refresh(String refreshToken) async {
+    try {
+      final response = await apiService.refresh({"refresh_token": refreshToken});
+      return Right(response.toEntity);
+    } catch (e, stackTrace) {
+      if (e is DioException) {
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
+  }
+
+  @override
   Future<String?> getAccessToken() async {
     return localSource.getAccessToken();
   }

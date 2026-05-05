@@ -26,11 +26,68 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:4281430618596423778",
+      "lastPropertyId": "4:7637327659519941809",
+      "name": "AudioPredictionBox",
+      "properties": [
+        {
+          "id": "1:6338602127736535075",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4430025251937721275",
+          "name": "label",
+          "type": 9
+        },
+        {
+          "id": "3:1091857228427997501",
+          "name": "score",
+          "type": 8
+        },
+        {
+          "id": "4:7637327659519941809",
+          "name": "audioResultId",
+          "indexId": "1:2810210183828136632",
+          "type": 11,
+          "flags": 520,
+          "relationTarget": "AudioResultBox"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:8072979797664169932",
+      "lastPropertyId": "2:3814617985774357858",
+      "name": "AudioResultBox",
+      "properties": [
+        {
+          "id": "1:1087720946265210099",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:3814617985774357858",
+          "name": "page",
+          "type": 6
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:4863253751995935484",
+          "name": "predictions",
+          "targetId": "2:4281430618596423778"
+        }
+      ]
     }
   ],
-  "lastEntityId": "1:5060861521753554436",
-  "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastEntityId": "3:8072979797664169932",
+  "lastIndexId": "1:2810210183828136632",
+  "lastRelationId": "1:4863253751995935484",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

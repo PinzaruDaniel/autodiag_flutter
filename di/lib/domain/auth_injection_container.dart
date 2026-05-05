@@ -2,6 +2,7 @@ import 'package:domain/modules/auth/auth_repository.dart';
 import 'package:domain/modules/auth/use_cases/auth_login_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_register_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_session_use_case.dart';
+import 'package:domain/modules/auth/use_cases/auth_validate_use_case.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init() async {
@@ -14,5 +15,9 @@ Future<void> init() async {
 
   dataDi.registerLazySingleton<AuthSessionUseCase>(
     () => AuthSessionUseCase(authRepository: dataDi<AuthRepository>()),
+  );
+
+  dataDi.registerLazySingleton<AuthValidateUseCase>(
+    () => AuthValidateUseCase(authRepository: dataDi<AuthRepository>()),
   );
 }

@@ -33,7 +33,7 @@ class RefreshInterceptor {
       String? refreshToken = await authLocalSource.getRefreshToken();
       consoleLog('refreshToken: $refreshToken');
       if (refreshToken != null) {
-        final response = await authApiService.refresh({'refreshToken': refreshToken});
+        final response = await authApiService.refresh({'refresh_token': refreshToken});
         await authLocalSource.insertAccessToken(response.accessToken!);
         success = true;
       }
@@ -102,12 +102,24 @@ class AuthInterceptor extends InterceptorsWrapper {
     consoleLog('onError interceptor: ${err.response?.data.runtimeType}, ${err.response?.data}');
 
     try {
-      if (err.response != null &&
-          err.response!.data is Map &&
-          (err.response!.data as Map).containsKey('error') &&
-          (err.response!.data as Map)['error'] == 'jwt expired' ||
-          (err.response!.data as Map)['error'] == 'invalid signature') {
-        consoleLog('Token expired, starting refresh... ${refreshInterceptor.lock.locked}');
+      final data = err.response?.data;
+      final statusCode = err.response?.statusCode;
+      String? errorText;
+      if (data is Map) {
+        final dynamic detail = data['detail'] ?? data['message'] ?? data['error'];
+        errorText = detail?.toString().toLowerCase();
+      } else if (data is String) {
+        errorText = data.toLowerCase();
+      }
+
+      final shouldRefresh = (statusCode == 401 || statusCode == 403) &&
+          (errorText?.contains('invalid token') == true ||
+              errorText?.contains('jwt expired') == true ||
+              errorText?.contains('invalid signature') == true ||
+              errorText?.contains('token expired') == true);
+
+      if (shouldRefresh) {
+        consoleLog('Token expired/invalid, starting refresh... ${refreshInterceptor.lock.locked}');
 
         await refreshInterceptor.regenerateAccessToken();
 
@@ -123,13 +135,13 @@ class AuthInterceptor extends InterceptorsWrapper {
 
           var newRequest = await dio.fetch(err.requestOptions);
 
-          final data = newRequest.data is String ? jsonDecode(newRequest.data) : newRequest.data;
-          consoleLog('Parsed data: $data');
+          final responseData = newRequest.data is String ? jsonDecode(newRequest.data) : newRequest.data;
+          consoleLog('Parsed data: $responseData');
 
           return handler.resolve(
             Response(
               requestOptions: err.requestOptions,
-              data: data,
+              data: responseData,
               statusCode: newRequest.statusCode,
               statusMessage: newRequest.statusMessage,
               headers: newRequest.headers,

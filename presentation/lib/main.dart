@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:domain/modules/auth/use_cases/auth_session_use_case.dart';
+import 'package:domain/modules/auth/use_cases/auth_validate_use_case.dart';
 import 'package:presentation/controllers/binding/root_bindings_controllers.dart';
 import 'package:presentation/pages/home/home_page.dart';
 import 'package:presentation/pages/login/login_page.dart';
 import 'package:presentation/resources/app_colors.dart';
 
 void main() async{
-  bool isSessionExpired = false;
   WidgetsFlutterBinding.ensureInitialized();
   await initDi(onSessionExpired: (){});
 
+  final hasSession = await GetIt.instance<AuthValidateUseCase>().call();
   RootBindings().dependencies();
-  final hasSession = await GetIt.instance<AuthSessionUseCase>().call();
   runApp(MyApp(initialLoggedIn: hasSession));
 }
 
