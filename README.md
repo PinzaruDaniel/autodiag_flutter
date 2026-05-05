@@ -13,7 +13,7 @@ AutoDiag AI is a Flutter application for vehicle diagnostics that includes user 
 ## Prerequisites
 
 - Flutter SDK (Dart 3.11.5)
-- Android Studio / Xcode / Chrome if you want to run on Android, iOS, or Web
+- Android Studio or Xcode (Android and iOS only)
 
 ## Setup
 
@@ -30,7 +30,7 @@ The API base URL is configured in:
 common/lib/constants/app_constants.dart
 ```
 
-Update `AppConstants.baseUrl` to point to your backend. The app expects these endpoints:
+Update `AppConstants.baseUrl` to your backend IP address. The backend runs locally, so use your machine's local network IP that your device/emulator can reach. The app expects these endpoints:
 
 - `POST /auth/login`
 - `POST /auth/register`
@@ -47,8 +47,8 @@ flutter run
 
 Examples:
 
-- Android/iOS simulator or device: `flutter run`
-- Web: `flutter run -d chrome`
+- Android emulator or device: `flutter run`
+- iOS simulator or device: `flutter run`
 
 ## Permissions & Audio Recording
 
@@ -58,9 +58,9 @@ The Home screen mic button records a short audio clip (default 7 seconds).
 - iOS permission: `presentation/ios/Runner/Info.plist`
 - Change duration: `presentation/lib/controllers/home_controller.dart`
 
-## Code Generation (Optional)
+## Code Generation (Required)
 
-If you modify ObjectBox, Freezed, or Retrofit models, regenerate code:
+Run code generation for ObjectBox, Freezed, and Retrofit before building:
 
 ```bash
 cd data
