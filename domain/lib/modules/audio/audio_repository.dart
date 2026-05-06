@@ -19,5 +19,5 @@ abstract class AudioRepository {
   });
 
   Future<void> clearCachedResults();
+  Future<Either<Failure, void>> deleteResults();
 }
-

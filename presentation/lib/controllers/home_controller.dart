@@ -125,7 +125,7 @@ class HomeController extends GetxController {
       return;
     }
     
-   // mainAppController.addPendingIds([PendingIds.sendAudio]);
+    mainAppController.addPendingIds([PendingIds.sendAudio]);
     await _sendAudioUseCase(SendAudioParams(file: file)).then((result) {
       result.fold(
         (failure) => _showSnack(Get.context, 'Failed to send audio: ${failure.message}'),
@@ -138,7 +138,7 @@ class HomeController extends GetxController {
         }
       );
     });
-    //mainAppController.removePendingIds([PendingIds.sendAudio]);
+    mainAppController.removePendingIds([PendingIds.sendAudio]);
   }
 
   void _showPredictionDialog(List<PredictionVm> predictions) {

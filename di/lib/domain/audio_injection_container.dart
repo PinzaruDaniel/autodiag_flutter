@@ -4,6 +4,7 @@ import 'package:domain/modules/audio/use_cases/get_audio_result_by_id_use_case.d
 import 'package:domain/modules/audio/use_cases/get_audio_results_use_case.dart';
 import 'package:domain/modules/audio/use_cases/get_cached_audio_results_use_case.dart';
 import 'package:domain/modules/audio/use_cases/send_audio_use_case.dart';
+import 'package:domain/modules/audio/use_cases/delete_audio_results_use_case.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init() async {
@@ -28,5 +29,8 @@ Future<void> init() async {
   dataDi.registerLazySingleton<ClearAudioCacheUseCase>(
     () => ClearAudioCacheUseCase(audioRepository: dataDi<AudioRepository>()),
   );
-}
 
+  dataDi.registerLazySingleton<DeleteAudioResultsUseCase>(
+    () => DeleteAudioResultsUseCase(audioRepository: dataDi<AudioRepository>()),
+  );
+}

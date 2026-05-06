@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:presentation/controllers/history_controller.dart';
 import 'package:presentation/resources/app_colors.dart';
 import 'package:presentation/resources/text_styles.dart';
+import 'package:presentation/utils/widgets/circular_progress_indicator_widget.dart';
+import 'package:presentation/utils/widgets/loading_overlay_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HistoryTab extends StatefulWidget {
@@ -69,7 +71,7 @@ class _HistoryTabState extends State<HistoryTab> {
       padding: .symmetric(horizontal: 16.w),
       child: Obx(() {
         if (_controller.isLoading.value && _controller.results.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: LoadingOverlayWidget());
         }
 
         if (_controller.results.isEmpty) {
@@ -87,8 +89,8 @@ class _HistoryTabState extends State<HistoryTab> {
             builder: (context, mode) {
               if (mode == LoadStatus.loading) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                  child: const Center(child: CircularProgressIndicator()),
+                  padding: EdgeInsets.symmetric(vertical: 30.h),
+                  child: const Center(child: CircularProgressIndicatorWidget(boxConstraints: BoxConstraints(minHeight: 30, minWidth: 30))),
                 );
               }
               return SizedBox(height: 24.h);

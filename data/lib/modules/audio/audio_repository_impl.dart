@@ -93,6 +93,20 @@ class AudioRepositoryImpl implements AudioRepository {
     await localSource.clearResults();
   }
 
+  @override
+  Future<Either<Failure, void>> deleteResults() async {
+    try {
+      await apiService.deleteResults();
+      await localSource.clearResults();
+      return const Right(null);
+    } catch (e, stackTrace) {
+      if (e is DioException) {
+        return Left(Failure.dio(e));
+      }
+      return Left(Failure.error(e, stackTrace));
+    }
+  }
+
   MediaType _resolveContentType(String path) {
     final ext = p.extension(path).toLowerCase();
     switch (ext) {

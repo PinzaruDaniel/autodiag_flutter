@@ -3,6 +3,8 @@ import 'package:domain/modules/auth/use_cases/auth_login_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_register_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_session_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_validate_use_case.dart';
+import 'package:domain/modules/auth/use_cases/auth_logout_use_case.dart';
+import 'package:domain/modules/auth/use_cases/auth_reset_password_use_case.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> init() async {
@@ -13,11 +15,19 @@ Future<void> init() async {
     () => AuthRegisterUseCase(authRepository: dataDi<AuthRepository>()),
   );
 
+  dataDi.registerLazySingleton<AuthResetPasswordUseCase>(
+    () => AuthResetPasswordUseCase(authRepository: dataDi<AuthRepository>()),
+  );
+
   dataDi.registerLazySingleton<AuthSessionUseCase>(
     () => AuthSessionUseCase(authRepository: dataDi<AuthRepository>()),
   );
 
   dataDi.registerLazySingleton<AuthValidateUseCase>(
     () => AuthValidateUseCase(authRepository: dataDi<AuthRepository>()),
+  );
+
+  dataDi.registerLazySingleton<AuthLogoutUseCase>(
+    () => AuthLogoutUseCase(authRepository: dataDi<AuthRepository>()),
   );
 }

@@ -17,4 +17,7 @@ abstract class AudioApiService {
 
   @GET('/audio/results/{results_id}')
   Future<AudioResultsApiDto> getResultById(@Path('results_id') int id);
+
+  @DELETE('/audio/results')
+  Future<void> deleteResults();
 }

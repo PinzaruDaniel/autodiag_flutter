@@ -20,6 +20,7 @@ import 'package:domain/modules/auth/use_cases/auth_login_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_register_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_session_use_case.dart';
 import 'package:domain/modules/auth/use_cases/auth_validate_use_case.dart';
+import 'package:domain/modules/auth/use_cases/auth_reset_password_use_case.dart';
 import 'package:domain/modules/auth/models/index.dart';
 
 class FakeAuthRepository implements AuthRepository {
@@ -72,6 +73,9 @@ void main() {
     );
     getIt.registerLazySingleton<AuthRegisterUseCase>(
       () => AuthRegisterUseCase(authRepository: getIt<AuthRepository>()),
+    );
+    getIt.registerLazySingleton<AuthResetPasswordUseCase>(
+      () => AuthResetPasswordUseCase(authRepository: getIt<AuthRepository>()),
     );
     getIt.registerLazySingleton<AuthSessionUseCase>(
       () => AuthSessionUseCase(authRepository: getIt<AuthRepository>()),

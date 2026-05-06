@@ -30,12 +30,7 @@ The API base URL is configured in:
 common/lib/constants/app_constants.dart
 ```
 
-Update `AppConstants.baseUrl` to your backend IP address. The backend runs locally, so use your machine's local network IP that your device/emulator can reach. The app expects these endpoints:
-
-- `POST /auth/login`
-- `POST /auth/register`
-- `POST /auth/reset-password`
-- `POST /auth/refresh`
+Update `AppConstants.baseUrl` to your backend IP address. The backend runs locally, so use your machine's local network IP that your device/emulator can reach.
 
 ## Run the App
 
@@ -44,9 +39,16 @@ From the `presentation` directory:
 ```bash
 flutter run
 ```
+Base credentials:
+
+user@example.com
+
+String123
+
+
 
 Examples:
-
+- direct from Android Studio or your IDE
 - Android emulator or device: `flutter run`
 - iOS simulator or device: `flutter run`
 
